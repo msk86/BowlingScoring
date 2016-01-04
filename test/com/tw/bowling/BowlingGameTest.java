@@ -15,4 +15,13 @@ public class BowlingGameTest {
 
         assertThat(game.score(), is(3));
     }
+
+    @Test
+    public void it_counts_1_pin_as_0_because_the_frame_is_not_finished() {
+        BowlingGame game = new BowlingGame();
+
+        game.knock("1");
+
+        assertThat(game.score(), is(0));
+    }
 }

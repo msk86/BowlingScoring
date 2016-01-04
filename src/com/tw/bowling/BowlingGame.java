@@ -12,8 +12,19 @@ public class BowlingGame {
         for(int i=0;i<knocks.length;i++) {
             rolls.add(new Roll(knocks[i], i));
         }
-        score = rolls.stream()
-                .mapToInt(Roll::getKnock)
+
+        List<Frame> frames = new ArrayList<>();
+        while(!rolls.isEmpty()) {
+            Frame frame = new Frame();
+            frames.add(frame);
+            frame.attachRoll(rolls.remove(0));
+            if(!rolls.isEmpty()) {
+                frame.attachRoll(rolls.remove(0));
+            }
+        }
+
+        score = frames.stream()
+                .mapToInt(Frame::getScore)
                 .reduce(0, (total, knock) -> total + knock);
     }
 
