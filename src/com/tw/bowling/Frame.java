@@ -7,6 +7,8 @@ public class Frame {
     private static final int MAX_FRAME = 10;
     private static final int MAX_KNOCK = 10;
     private static final int MAX_THROWS = 2;
+    private static final int STRIKE_BONUS_ROLLS = 2;
+    private static final int SPARE_BONUS_ROLLS = 1;
 
     int index;
     List<Roll> rolls = new ArrayList<>();
@@ -26,12 +28,12 @@ public class Frame {
                     .reduce(0, (total, knock) -> total + knock);
             if (isStrike()) {
                 score += nextRolls.stream()
-                        .limit(2)
+                        .limit(STRIKE_BONUS_ROLLS)
                         .mapToInt(Roll::getKnock)
                         .reduce(0, (total, knock) -> total + knock);
             } else if (isSpare()) {
                 score += nextRolls.stream()
-                        .limit(1)
+                        .limit(SPARE_BONUS_ROLLS)
                         .mapToInt(Roll::getKnock)
                         .reduce(0, (total, knock) -> total + knock);
             }

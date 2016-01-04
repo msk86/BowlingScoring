@@ -9,8 +9,11 @@ public class BowlingGame {
     public void knock(String knockSequence) {
         List<Roll> rolls = parseRolls(knockSequence);
         List<Frame> frames = parseFrames(rolls);
+        score = calculateScore(frames, rolls);
+    }
 
-        score = frames.stream()
+    private int calculateScore(List<Frame> frames, List<Roll> rolls) {
+        return frames.stream()
                 .mapToInt(frame -> frame.getScore(Utils.subList(rolls, frame.nextRollIndex())))
                 .reduce(0, (total, knock) -> total + knock);
     }
