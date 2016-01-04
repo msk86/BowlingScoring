@@ -51,4 +51,13 @@ public class BowlingGameTest {
 
         assertThat(game.score(), is(18));
     }
+
+    @Test
+    public void it_counts_perfect_as_300() {
+        BowlingGame game = new BowlingGame();
+
+        game.knock("10 10 10 10 10 10 10 10 10 10 10 10");
+
+        assertThat(game.score(), is(300));
+    }
 }
