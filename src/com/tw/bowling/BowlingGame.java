@@ -2,11 +2,8 @@ package com.tw.bowling;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class BowlingGame {
-    private static final int MAX_FRAME_COUNT = 10;
-
     private int score;
 
     public void knock(String knockSequence) {
@@ -14,7 +11,7 @@ public class BowlingGame {
         List<Frame> frames = parseFrames(rolls);
 
         score = frames.stream()
-                .mapToInt(Frame::getScore)
+                .mapToInt(frame -> frame.getScore(Utils.subList(rolls, frame.nextRollIndex(), 2)))
                 .reduce(0, (total, knock) -> total + knock);
     }
 
@@ -29,11 +26,20 @@ public class BowlingGame {
 
     private List<Frame> parseFrames(List<Roll> rolls) {
         List<Frame> frames = new ArrayList<>();
-        IntStream.range(0, MAX_FRAME_COUNT).forEach(i -> frames.add(new Frame()));
-
-        for (Frame frame : frames) {
-            frame.attachRolls(rolls);
+        int frameIndex = 0;
+        Frame frame = new Frame(frameIndex);
+        frames.add(frame);
+        for (Roll roll : rolls) {
+            if (!frame.isDone()) {
+                frame.attachRoll(roll);
+            } else {
+                frameIndex ++;
+                frame = new Frame(frameIndex);
+                frames.add(frame);
+                frame.attachRoll(roll);
+            }
         }
+
         return frames;
     }
 

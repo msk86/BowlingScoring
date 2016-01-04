@@ -24,4 +24,22 @@ public class BowlingGameTest {
 
         assertThat(game.score(), is(0));
     }
+
+    @Test
+    public void it_counts_strike_as_0_because_the_bonus_need_more_roll() {
+        BowlingGame game = new BowlingGame();
+
+        game.knock("10");
+
+        assertThat(game.score(), is(0));
+    }
+
+    @Test
+    public void it_counts_strike_and_3_4_as_24() {
+        BowlingGame game = new BowlingGame();
+
+        game.knock("10 3 4");
+
+        assertThat(game.score(), is(24));
+    }
 }
