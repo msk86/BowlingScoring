@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frame {
+    private static final int MAX_FRAME = 10;
     private static final int MAX_KNOCK = 10;
     private static final int MAX_THROWS = 2;
 
@@ -20,25 +21,21 @@ public class Frame {
 
     public int getScore(List<Roll> nextRolls) {
         if (isDone()) {
+            int score = rolls.stream()
+                    .mapToInt(Roll::getKnock)
+                    .reduce(0, (total, knock) -> total + knock);
             if (isStrike()) {
-                if (nextRolls.size() >= 2) {
-                    return MAX_KNOCK + nextRolls.stream()
-                            .limit(2)
-                            .mapToInt(Roll::getKnock)
-                            .reduce(0, (total, knock) -> total + knock);
-                }
-            } else if(isSpare()) {
-                if (nextRolls.size() >= 1) {
-                    return MAX_KNOCK + nextRolls.stream()
-                            .limit(1)
-                            .mapToInt(Roll::getKnock)
-                            .reduce(0, (total, knock) -> total + knock);
-                }
-            } else {
-                return rolls.stream()
+                score += nextRolls.stream()
+                        .limit(2)
+                        .mapToInt(Roll::getKnock)
+                        .reduce(0, (total, knock) -> total + knock);
+            } else if (isSpare()) {
+                score += nextRolls.stream()
+                        .limit(1)
                         .mapToInt(Roll::getKnock)
                         .reduce(0, (total, knock) -> total + knock);
             }
+            return score;
         }
         return 0;
     }
@@ -56,7 +53,7 @@ public class Frame {
     }
 
     public boolean isDone() {
-        return isStrike() || rolls.size() == MAX_THROWS;
+        return (isStrike() || rolls.size() == MAX_THROWS) && index < MAX_FRAME;
     }
 
     public int nextRollIndex() {

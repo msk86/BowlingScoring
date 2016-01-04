@@ -26,12 +26,12 @@ public class BowlingGameTest {
     }
 
     @Test
-    public void it_counts_strike_as_0_because_the_bonus_need_more_roll() {
+    public void it_counts_strike_as_10_if_not_further_roll() {
         BowlingGame game = new BowlingGame();
 
         game.knock("10");
 
-        assertThat(game.score(), is(0));
+        assertThat(game.score(), is(10));
     }
 
     @Test
@@ -41,6 +41,15 @@ public class BowlingGameTest {
         game.knock("10 3 4");
 
         assertThat(game.score(), is(24));
+    }
+
+    @Test
+    public void it_counts_spare_as_10_if_not_further_roll() {
+        BowlingGame game = new BowlingGame();
+
+        game.knock("2 8");
+
+        assertThat(game.score(), is(10));
     }
 
     @Test

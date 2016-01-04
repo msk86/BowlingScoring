@@ -73,6 +73,16 @@ public class FrameTest {
     }
 
     @Test
+    public void it_is_not_ready_when_throw_additional_roll() {
+        Frame frame = new Frame(10);
+        List<Roll> rolls = new ArrayList<>();
+        rolls.add(new Roll("10", 0));
+        frame.attachRolls(rolls);
+
+        assertFalse(frame.isDone());
+    }
+
+    @Test
     public void it_is_support_spare() {
         Frame frame = new Frame(0);
         List<Roll> rolls = new ArrayList<>();
