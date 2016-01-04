@@ -19,3 +19,6 @@ Example inputs and outputs
     
     "10 10 10 10 10 10 10 10 10 10 10 10" -> 300
 
+## Setup
+
+    $ gradle dependencies
