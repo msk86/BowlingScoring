@@ -11,7 +11,7 @@ public class BowlingGame {
         List<Frame> frames = parseFrames(rolls);
 
         score = frames.stream()
-                .mapToInt(frame -> frame.getScore(Utils.subList(rolls, frame.nextRollIndex(), 2)))
+                .mapToInt(frame -> frame.getScore(Utils.subList(rolls, frame.nextRollIndex())))
                 .reduce(0, (total, knock) -> total + knock);
     }
 

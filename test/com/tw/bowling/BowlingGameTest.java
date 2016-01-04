@@ -42,4 +42,13 @@ public class BowlingGameTest {
 
         assertThat(game.score(), is(24));
     }
+
+    @Test
+    public void it_counts_spare_and_3_as_16() {
+        BowlingGame game = new BowlingGame();
+
+        game.knock("2 8 3 2");
+
+        assertThat(game.score(), is(18));
+    }
 }

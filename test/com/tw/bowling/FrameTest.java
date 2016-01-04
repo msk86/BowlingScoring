@@ -71,4 +71,15 @@ public class FrameTest {
 
         assertTrue(frame.isDone());
     }
+
+    @Test
+    public void it_is_support_spare() {
+        Frame frame = new Frame(0);
+        List<Roll> rolls = new ArrayList<>();
+        rolls.add(new Roll("2", 0));
+        rolls.add(new Roll("8", 0));
+        frame.attachRolls(rolls);
+
+        assertTrue(frame.isSpare());
+    }
 }
