@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class BowlingGame {
+    private static final int MAX_FRAME_COUNT = 10;
+
     private int score;
 
     public void knock(String knockSequence) {
@@ -19,7 +21,7 @@ public class BowlingGame {
     private List<Roll> parseRolls(String knockSequence) {
         List<Roll> rolls = new ArrayList<>();
         String[] knocks = knockSequence.split("\\s+");
-        for(int i=0;i<knocks.length;i++) {
+        for (int i = 0; i < knocks.length; i++) {
             rolls.add(new Roll(knocks[i], i));
         }
         return rolls;
@@ -27,15 +29,10 @@ public class BowlingGame {
 
     private List<Frame> parseFrames(List<Roll> rolls) {
         List<Frame> frames = new ArrayList<>();
-        IntStream.range(0, 10).forEach(i->frames.add(new Frame()));
+        IntStream.range(0, MAX_FRAME_COUNT).forEach(i -> frames.add(new Frame()));
 
         for (Frame frame : frames) {
-            if (!rolls.isEmpty()) {
-                frame.attachRoll(rolls.remove(0));
-            }
-            if (!rolls.isEmpty()) {
-                frame.attachRoll(rolls.remove(0));
-            }
+            frame.attachRolls(rolls);
         }
         return frames;
     }
