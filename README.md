@@ -22,3 +22,7 @@ Example inputs and outputs
 ## Setup
 
     $ gradle dependencies
+    
+## Execute
+
+    $ gradle execute -Pknocks="10 10 10 10 10 10 10 10 10 10 10 10"

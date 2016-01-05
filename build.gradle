@@ -13,5 +13,6 @@ dependencies {
 
 task execute(type:JavaExec) {
     main = "com.tw.bowling.Main"
+    args = [knocks]
     classpath += sourceSets.main.runtimeClasspath
 }
