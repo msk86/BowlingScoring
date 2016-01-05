@@ -2,6 +2,7 @@ package com.tw.bowling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Frame {
     private static final int MAX_FRAME = 10;
@@ -23,23 +24,20 @@ public class Frame {
 
     public int getScore(List<Roll> nextRolls) {
         if (isDone()) {
-            int score = rolls.stream()
-                    .mapToInt(Roll::getKnock)
-                    .reduce(0, (total, knock) -> total + knock);
+            int score = totalScore(rolls.stream());
             if (isStrike()) {
-                score += nextRolls.stream()
-                        .limit(STRIKE_BONUS_ROLLS)
-                        .mapToInt(Roll::getKnock)
-                        .reduce(0, (total, knock) -> total + knock);
+                score += totalScore(nextRolls.stream().limit(STRIKE_BONUS_ROLLS));
             } else if (isSpare()) {
-                score += nextRolls.stream()
-                        .limit(SPARE_BONUS_ROLLS)
-                        .mapToInt(Roll::getKnock)
-                        .reduce(0, (total, knock) -> total + knock);
+                score += totalScore(nextRolls.stream().limit(SPARE_BONUS_ROLLS));
             }
             return score;
         }
         return 0;
+    }
+
+    private int totalScore(Stream<Roll> rollStream) {
+        return rollStream.mapToInt(Roll::getKnock)
+                .reduce(0, (total, knock) -> total + knock);
     }
 
     public void attachRolls(List<Roll> rolls) {

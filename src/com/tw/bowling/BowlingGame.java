@@ -29,18 +29,15 @@ public class BowlingGame {
 
     private List<Frame> parseFrames(List<Roll> rolls) {
         List<Frame> frames = new ArrayList<>();
-        int frameIndex = 0;
-        Frame frame = new Frame(frameIndex);
-        frames.add(frame);
+        int frameIndex = -1;
+        Frame frame = null;
         for (Roll roll : rolls) {
-            if (!frame.isDone()) {
-                frame.attachRoll(roll);
-            } else {
+            if(frame == null || frame.isDone()) {
                 frameIndex ++;
                 frame = new Frame(frameIndex);
                 frames.add(frame);
-                frame.attachRoll(roll);
             }
+            frame.attachRoll(roll);
         }
 
         return frames;
